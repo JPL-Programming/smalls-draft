@@ -1,7 +1,7 @@
 {
   "name": "smalls-draft",
   "version": "0.1.0",
-  "homepage": "https://misaac3.github.io/nfl-draft/",
+  "homepage": "https://jpl-programming.github.io/smalls-draft/",
   "dependencies": {
     "bootstrap": "^4.2.1",
     "gh-pages": "^2.0.1",
