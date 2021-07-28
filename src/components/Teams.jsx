@@ -6,44 +6,44 @@ import TeamSelect from './TeamSelect'
 
 export class Teams extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.props.hasOwnProperty('forTrade')
+        this.props.hasOwnProperty('forTrade')
 
-    this.state = {
-      forTrade: this.props.hasOwnProperty('forTrade'),
-      players: this.props.players,
-      playerWasSelected: this.props.playerWasSelected,
-      pickWasSelected: this.props.pickWasSelected,
-      teams: this.props.teams,
-      teamsToPlayer: this.props.teamsToPlayer,
-      rounds: Array.from(new Set(this.props.teams.map(p => p.pick.round))),
-      teamToDisplay: 'All',
-      userCanPick: this.props.userCanPick,
+        this.state = {
+            forTrade: this.props.hasOwnProperty('forTrade'),
+            players: this.props.players,
+            playerWasSelected: this.props.playerWasSelected,
+            pickWasSelected: this.props.pickWasSelected,
+            teams: this.props.teams,
+            teamsToPlayer: this.props.teamsToPlayer,
+            rounds: Array.from(new Set(this.props.teams.map(p => p.pick.round))),
+            teamToDisplay: 'All',
+            userCanPick: this.props.userCanPick,
 
-      teamForDraftSimMode: this.props.teamForDraftSimMode,
-      playersChosenByUser: this.props.playersChosenByUser
+            teamForDraftSimMode: this.props.teamForDraftSimMode,
+            playersChosenByUser: this.props.playersChosenByUser
 
+
+        }
 
     }
 
-  }
+    componentWillReceiveProps(nextProps) {
+        this.setState({ teams: nextProps.teams, teamsToPlayer: nextProps.teamsToPlayer });
+    }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ teams: nextProps.teams, teamsToPlayer: nextProps.teamsToPlayer });
-  }
+    onSelectChange = () => {
+        console.log('select changed')
+        let teamToDisplay = document.querySelector('#teamSelect') !== null ? document.querySelector('#teamSelect').value : 'All'
+        this.setState({ teamToDisplay })
+    }
 
-  onSelectChange = () => {
-    console.log('select changed')
-    let teamToDisplay = document.querySelector('#teamSelect') !== null ? document.querySelector('#teamSelect').value : 'All'
-    this.setState({ teamToDisplay })
-  }
-
-  render() {
-    // console.log(this.props.teamForDraftSimMode)
-    return (
-      <div className={this.state.forTrade ? 'col-12' : 'col-6 text-small'}>
+    render() {
+        // console.log(this.props.teamForDraftSimMode)
+        return (
+            <div className={this.state.forTrade ? 'col-12' : 'col-6 text-small'}>
         <div>
           <b>{this.props.teamForDraftSimMode}</b>
         </div>
@@ -88,8 +88,8 @@ export class Teams extends Component {
       </div>
 
 
-    )
-  }
+        )
+    }
 }
 
 export default Teams

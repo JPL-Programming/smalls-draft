@@ -29,7 +29,6 @@ export class TeamSelect extends Component {
                     <option value='Darren Clarke'>Darren Clarke</option>
                     <option value='Robert Morrison'>Robert Morrison</option>
                     <option value='Ben Peroni'>Ben Peroni</option>
-                    <option value='Peter Allery'>Peter Allery</option>
                     <option value='John Gardiner'>John Gardiner</option>
                     <option value='Gary Stark'>Gary Stark</option>
                     <option value='JJ'>JJ</option>

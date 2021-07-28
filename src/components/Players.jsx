@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Player from './Player';
 import PositionButton from './PositionButton'
 // import ListGroup from "../../node_modules/react-bootstrap/lib/ListGroup"
+import ClubSelect from './ClubSelect'
+import PlayerSearch from './PlayerSearch'
 
 
 export class Players extends Component {
@@ -15,8 +17,10 @@ export class Players extends Component {
             teamsToPlayer: this.props.teamsToPlayer,
             positionFilter: Array.from(new Set(this.props.players.map(p => p.player.position))),
             uniquePositions: Array.from(new Set(this.props.players.map(p => p.player.position))).sort(),
-            hideDrafted: true,
-            userCanPick: this.props.userCanPick
+            userCanPick: this.props.userCanPick,
+            clubToDisplay: this.props.clubToDisplay,
+            hideDrafted: this.props.hideDrafted,
+            searchedPlayer: this.props.searchedPlayer
         };
     }
 
@@ -49,6 +53,16 @@ export class Players extends Component {
         return playersArray;
     }
 
+    onSelectChange = () => {
+        let clubToDisplay = document.querySelector('#clubSelect') !== null ? document.querySelector('#clubSelect').value : 'All'
+        this.setState({ clubToDisplay })
+    }
+
+    onSearchChange = () => {
+        let searchedPlayer = document.querySelector('#playerSearch') !== null ? document.querySelector('#playerSearch').value : ''
+        this.setState({ searchedPlayer })
+    }
+
     render() {
         let { uniquePositions } = this.state
         let playersArray = this.getPlayersArray();
@@ -60,62 +74,70 @@ export class Players extends Component {
                     <button type="button" className="btn btn-danger">Hide Drafted Players</button>
                 </div> */}
                 <div className="col-12">
-
-                    <div className="btn-group col-12" data-toggle='buttons' onClick={() => { this.setState({ hideDrafted: !this.state.hideDrafted }) }}>
-                        <label className={"btn btn-block " + (this.state.hideDrafted ? 'btn-secondary' : 'btn-success')}>
-                            {this.state.hideDrafted ? 'Check to show drafted players' : 'Check to hide drafted players'}
-                        </label>
+                    <div className='row'>
+                        {this.state.forTrade ? null : <ClubSelect onSelectChange={this.onSelectChange} />}
                     </div>
+                    <div className='row mb-2' style={{ justifyContent: 'center' }}>
+                        {uniquePositions.map(pos =>
 
-                    <div className='row mb-2'>
-                        <div className="col-12">
-                            <button className='btn btn-info float-left' onClick={() => this.setState({ positionFilter: this.state.uniquePositions })}>Show All Positions</button>
-                            <button className='btn btn-info float-right' onClick={() => this.setState({ positionFilter: [] })}>Hide All Positions</button>
-                        </div>
-                    </div>
-                    <div className='row mb-2'>
-                        <div className="col-12">
-                            {uniquePositions.map(pos =>
+                            <PositionButton
+                                filterPosition={this.filterPositionOnClick}
+                                pos={pos}
+                                show={this.state.positionFilter.includes(pos)}
+                                key={pos}
+                            />
 
-                                <PositionButton
-                                    filterPosition={this.filterPositionOnClick}
-                                    pos={pos}
-                                    show={this.state.positionFilter.includes(pos)}
-                                    key={pos}
-                                />
-
-                            )}
-                        </div>
+                        )}
+                        <button className='btn btn-info' style={{margin:'0.1rem'}} onClick={() => this.setState({ positionFilter: this.state.uniquePositions })}>Show All</button>
+                        <button className='btn btn-info' style={{margin:'0.1rem'}} onClick={() => this.setState({ positionFilter: [] })}>Hide All</button>
                     </div>
                 </div>
+                <PlayerSearch onSearchChange={this.onSearchChange} />
                 <div
                     className="list-group"
                 >
                     <br />
                     <div>
                         {playersArray.filter((p) => {
-                            if (this.state.hideDrafted) {
+                            if (this.props.hideDrafted) {
                                 return !this.state.teamsToPlayer.includes(p.key)
                             }
                             else {
                                 return true
                             }
-                        })
-                            .map((p) =>
-                                < Player
+                        }).filter(p => {
+                            let { clubToDisplay } = this.state
 
-                                    userCanPick={this.state.userCanPick}
-                                    onRightClick={this.state.onRightClick}
-                                    playerWasSelected={this.state.playerWasSelected}
-                                    player={p.player}
-                                    teamDraftedTo={
-                                        this.state.teams[this.state.teamsToPlayer.indexOf(p.key)]
-                                    }
-                                    key={p.player.rank}
-                                    isPicked={(this.state.teamsToPlayer.includes(p.key))}
-                                    active="active"
-                                />
-                            )}
+                            if (clubToDisplay === 'All') { 
+                                return true 
+                            } else { 
+                                return p.player.school === clubToDisplay 
+                            }
+                        }).filter(p => {
+                            let { searchedPlayer } = this.state
+
+                            if (searchedPlayer === '') {
+                                return true
+                            } else {
+                                return p.player.name.toLowerCase().search(searchedPlayer.toLowerCase()) > 0
+                            }
+                        }).map((p) =>
+                            < Player
+
+                                userCanPick={this.state.userCanPick}
+                                onRightClick={this.state.onRightClick}
+                                playerWasSelected={this.state.playerWasSelected}
+                                player={p.player}
+                                teamDraftedTo={
+                                    this.state.teams[this.state.teamsToPlayer.indexOf(p.key)]
+                                }
+                                key={p.player.rank}
+                                isPicked={(this.state.teamsToPlayer.includes(p.key))}
+                                active="active"
+                                clubToDisplay={this.state.clubToDisplay}
+                                searchedPlayer={this.state.searchedPlayer}
+                            />
+                        )}
 
                     </div>
                 </div>

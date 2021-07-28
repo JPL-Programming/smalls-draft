@@ -18,10 +18,6 @@ export class Team extends Component {
     }
 
     clicked = (pick) => {
-        //TODO Forfeited picks (giants)
-        if (this.state.pick.pickNum !== '71') {
-            this.state.pickWasSelected(pick)
-        }
     }
 
     componentWillReceiveProps(nextProps) {
