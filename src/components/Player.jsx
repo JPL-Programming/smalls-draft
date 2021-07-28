@@ -16,7 +16,7 @@ class Player extends Component {
         this.props.playerWasSelected(player, this.state.clubToDisplay)
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ player: nextProps.player, teamDraftedTo: nextProps.teamDraftedTo, isPicked: nextProps.isPicked })
     }
 

@@ -11,7 +11,7 @@ export class PickForTrade extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let { trades } = this.state
         let { pickNum } = this.state.pick.pick
         this.setState({ pick: nextProps.pick, active: trades.includes(pickNum) });

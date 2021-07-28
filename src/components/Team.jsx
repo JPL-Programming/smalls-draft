@@ -20,7 +20,7 @@ export class Team extends Component {
     clicked = (pick) => {
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let { pick } = nextProps.pick
         this.setState({ pick, playerPicked: nextProps.playerPicked })
     }

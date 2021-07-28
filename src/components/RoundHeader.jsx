@@ -20,7 +20,7 @@ export class RoundHeader extends Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let teamToDisplay = nextProps.teamToDisplay !== null ? nextProps.teamToDisplay : null;
         this.setState({ teams: nextProps.teams, teamsToPlayer: nextProps.teamsToPlayer, teamToDisplay });
     }

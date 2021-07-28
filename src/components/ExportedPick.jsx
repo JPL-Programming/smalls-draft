@@ -12,7 +12,7 @@ export class ExportedPick extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         console.log("will receive props")
         console.log((this.props.teamSelectedForSim))
         this.setState({ teamSelectedForSim: nextProps.teamSelectedForSim })

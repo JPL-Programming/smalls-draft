@@ -30,7 +30,7 @@ export class Teams extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ teams: nextProps.teams, teamsToPlayer: nextProps.teamsToPlayer });
     }
 
