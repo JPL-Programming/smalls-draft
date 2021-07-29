@@ -68,7 +68,7 @@ export class Players extends Component {
         let playersArray = this.getPlayersArray();
 
         return (
-            <div className="col-6"  >
+            <div className="col-6 special">
                 {/* <div className="btn-group" role="group" aria-label="Basic example">
                     <button type="button" className="btn btn-primary ">Show Drafted Players</button>
                     <button type="button" className="btn btn-danger">Hide Drafted Players</button>

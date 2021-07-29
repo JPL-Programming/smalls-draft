@@ -356,6 +356,9 @@ class App extends Component {
         }
 
         document.getElementById('pick' + currentPickNo).classList.add('onTheClock');
+
+        window.scrollTo(0, document.getElementById('pick' + currentPickNo).offsetTop);
+
     }
 
     autoPick = () => {
