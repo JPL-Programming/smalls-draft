@@ -4,7 +4,9 @@ import Header from './components/Header.jsx';
 import Players from './components/Players.jsx';
 import Teams from "./components/Teams.jsx";
 import ExportModal from "./components/ExportModal.jsx";
-import SelectTeamModal from './components/SelectTeamModal'
+import SelectTeamModal from './components/SelectTeamModal';
+import axios from 'axios';
+//import Api from './components/Api.jsx';
 
 // import teamorder from './teamsorder.json';
 import teamorder from './fullteamorder.json';
@@ -56,15 +58,23 @@ class App extends Component {
             playersChosenByUser: [],
             clubToDisplay: 'All',
             hideDrafted: true,
-            searchedPlayer: ''
+            searchedPlayer: '',
+            currentPickNo: 0
         }
     }
 
     setState(state) {
-        console.log(state);
         super.setState(state);
 
         window.localStorage.setItem('state', JSON.stringify(this.state));
+    }
+
+    componentDidMount() {
+
+        let newCurrentPickNo = this.state.currentPickNo+1
+        this.setState({currentPickNo: newCurrentPickNo})
+        this.updateOnTheClock(newCurrentPickNo)
+
     }
 
     playerWasSelected = (selectedPLayer, clubToDisplay) => {
@@ -287,7 +297,10 @@ class App extends Component {
     }
 
     onRightClick = (e, player) => {
-        if (!this.state.draftSimulatorMode) {
+        if (
+            !this.state.draftSimulatorMode
+            && window.location.href !== 'https://jpl-programming.github.io/smalls-draft/'
+        ) {
             e.preventDefault();
 
             let ttp = this.state.teamsToPlayer;
@@ -306,10 +319,44 @@ class App extends Component {
             // this.playerWasSelected(player)  
 
             ttp[nextPick] = player.rank
-            this.setState({ teamsToPlayer: ttp })
+            let currentPickNo = nextPick+2
+
+            this.setState({ teamsToPlayer: ttp, currentPickNo: currentPickNo })
+
+            axios({
+                method: 'post',
+                url: 'https://smalls-auction.jpl-hosting.co.uk/',
+                data: {
+                    teamsToPlayer: ttp
+                },
+                transformRequest: [
+                    function(data, headers) {
+                        const serializedData = []
+
+                        for (const k in data) {
+                            if (data[k]) {
+                                serializedData.push(`${k}=${encodeURIComponent(data[k])}`)
+                            }
+                        }
+
+                        return serializedData.join('&')
+                    }
+                ]
+            })
+
+            this.updateOnTheClock(currentPickNo);
         }
     }
 
+    updateOnTheClock = (currentPickNo) => {
+        let currentlyOnTheClock = document.getElementsByClassName('onTheClock')
+
+        if (currentlyOnTheClock.length !== 0) {
+            document.getElementsByClassName('onTheClock')[0].classList.remove('onTheClock');
+        }
+
+        document.getElementById('pick' + currentPickNo).classList.add('onTheClock');
+    }
 
     autoPick = () => {
 
@@ -580,6 +627,8 @@ class App extends Component {
               teamsToPlayer={this.state.teamsToPlayer}
               teamForDraftSimMode={this.state.teamForDraftSimMode}
               playersChosenByUser={this.state.playersChosenByUser}
+              currentPickNo={this.state.currentPickNo}
+              updateOnTheClock={this.updateOnTheClock}
             />
             < br />
             < Players

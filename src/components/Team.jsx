@@ -12,8 +12,9 @@ export class Team extends Component {
             playerPicked: null,
             pickWasSelected: this.props.pickWasSelected,
             forTrade: this.props.forTrade,
-            userCanPick: this.props.userCanPick
-
+            userCanPick: this.props.userCanPick,
+            onTheClock: false,
+            currentPickNo: this.props.currentPickNo
         }
     }
 
@@ -23,19 +24,28 @@ export class Team extends Component {
     UNSAFE_componentWillReceiveProps(nextProps) {
         let { pick } = nextProps.pick
         this.setState({ pick, playerPicked: nextProps.playerPicked })
-    }
 
-    nothing = () => {
-
+        let onTheClock = this.state.currentPickNo === pick.pickNum
+        //console.log();
+        this.setState({ onTheClock });
     }
 
     render() {
         let backgroundColor = this.state.pick.isSelected ? '#37BC9B' : 'white'
         backgroundColor = this.state.playerPicked ? '#D3D3D3' : backgroundColor
+
+        let className = '';
+        className += this.state.forTrade 
+            ? "list-group-item" 
+            : "list-group-item text-sm-left py-3";
+
+        className += this.state.onTheClock ? " onTheClock" : "";
+
         return (
             <div>
                 <li
-                    className={this.state.forTrade ? "list-group-item" : "list-group-item text-sm-left py-3"}
+                    id={"pick" + this.state.pick.pickNum}
+                    className={className}
                     onClick={this.clicked.bind(this, this.state.pick)}
                     style={{
                         backgroundColor

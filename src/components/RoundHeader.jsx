@@ -13,9 +13,8 @@ export class RoundHeader extends Component {
             teamsToPlayer: this.props.teamsToPlayer,
             round: this.props.round,
             teamToDisplay: 'All',
-            userCanPick: this.props.userCanPick
-
-
+            userCanPick: this.props.userCanPick,
+            currentPickNo: this.props.currentPickNo
         }
     }
 
@@ -62,6 +61,7 @@ export class RoundHeader extends Component {
                                                 active="active"
                                                 pickWasSelected={this.state.pickWasSelected}
                                                 key={p.pick.pickNum}
+                                                currentPickNo={this.state.currentPickNo}
                                             />)}
                                 </ div>
                             </div>

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 export class ClubSelect extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
             onSelectChange: this.props.onSelectChange,
             tradeClub: this.props.hasOwnProperty('tradeClub') ? this.props.tradeClub : null,

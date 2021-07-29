@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": "https://jpl-programming.github.io/smalls-draft/",
   "dependencies": {
+    "axios": "^0.21.1",
     "bootstrap": "^4.2.1",
     "gh-pages": "^2.0.1",
     "react": "^16.7.0",

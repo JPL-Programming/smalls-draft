@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import Team from './Team';
 import RoundHeader from './RoundHeader'
 import TeamSelect from './TeamSelect'
-
+import Api from './Api';
 
 export class Teams extends Component {
 
@@ -21,12 +21,41 @@ export class Teams extends Component {
             rounds: Array.from(new Set(this.props.teams.map(p => p.pick.round))),
             teamToDisplay: 'All',
             userCanPick: this.props.userCanPick,
+            currentPickNo: this.props.currentPickNo,
 
             teamForDraftSimMode: this.props.teamForDraftSimMode,
             playersChosenByUser: this.props.playersChosenByUser
-
-
         }
+
+    }
+
+    getInitialState() {
+        Api.get()
+            .then(result => {
+
+                let teamsToPlayer = result.data.split(',');
+                let currentPickNo = teamsToPlayer.filter(Number).length + 1;
+
+                this.setState({ teamsToPlayer: teamsToPlayer, currentPickNo });
+            });
+    }
+
+    componentDidMount() {
+        this.getInitialState()
+
+        setTimeout(() => {
+            this.refreshState()
+        }, 5000);
+    }
+
+    refreshState() {
+
+        setTimeout(() => {
+            this.getInitialState();
+            this.props.updateOnTheClock(this.props.currentPickNo);
+            this.refreshState();
+        }, 2000);
+
 
     }
 
@@ -63,7 +92,7 @@ export class Teams extends Component {
               round={round}
               key={round}
               teamToDisplay={this.state.teamToDisplay}
-
+              currentPickNo={this.state.currentPickNo}
             />
           </div>
         )}
@@ -81,7 +110,7 @@ export class Teams extends Component {
                 round={round}
                 key={round}
                 teamToDisplay={this.state.teamToDisplay}
-
+                currentPickNo={this.state.currentPickNo}
               />
             </div>)
           ) : null}

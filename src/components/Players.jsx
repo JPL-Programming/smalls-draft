@@ -119,7 +119,7 @@ export class Players extends Component {
                             if (searchedPlayer === '') {
                                 return true
                             } else {
-                                return p.player.name.toLowerCase().search(searchedPlayer.toLowerCase()) > 0
+                                return p.player.name.toLowerCase().search(searchedPlayer.toLowerCase()) >= 0
                             }
                         }).map((p) =>
                             < Player
