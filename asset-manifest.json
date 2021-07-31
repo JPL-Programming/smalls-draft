@@ -1,7 +1,7 @@
 {
   "main.css": "/smalls-draft/static/css/main.4f843b35.chunk.css",
-  "main.js": "/smalls-draft/static/js/main.c7acda9c.chunk.js",
-  "main.js.map": "/smalls-draft/static/js/main.c7acda9c.chunk.js.map",
+  "main.js": "/smalls-draft/static/js/main.ad24b19d.chunk.js",
+  "main.js.map": "/smalls-draft/static/js/main.ad24b19d.chunk.js.map",
   "static/css/1.3b8d376e.chunk.css": "/smalls-draft/static/css/1.3b8d376e.chunk.css",
   "static/js/1.9a2a0601.chunk.js": "/smalls-draft/static/js/1.9a2a0601.chunk.js",
   "static/js/1.9a2a0601.chunk.js.map": "/smalls-draft/static/js/1.9a2a0601.chunk.js.map",
@@ -10,6 +10,6 @@
   "static/css/main.4f843b35.chunk.css.map": "/smalls-draft/static/css/main.4f843b35.chunk.css.map",
   "static/css/1.3b8d376e.chunk.css.map": "/smalls-draft/static/css/1.3b8d376e.chunk.css.map",
   "index.html": "/smalls-draft/index.html",
-  "precache-manifest.fbe970daba356cf203f66f62bc284a53.js": "/smalls-draft/precache-manifest.fbe970daba356cf203f66f62bc284a53.js",
+  "precache-manifest.8e0ad354604cf02bb3809e22e794f2eb.js": "/smalls-draft/precache-manifest.8e0ad354604cf02bb3809e22e794f2eb.js",
   "service-worker.js": "/smalls-draft/service-worker.js"
 }
